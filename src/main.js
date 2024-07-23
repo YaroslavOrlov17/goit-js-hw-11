@@ -31,11 +31,21 @@ function handleSubmit(event) {
           'Sorry, there are no images matching your search query. Please try again!'
         );
       } else {
+        galleryList.innerHTML = '';
+
         console.log(images.hits);
         const murkup = images.hits
           .map(
             image =>
-              `<li><img src="${image.webformatURL}" alt="${image.tags}"></li>`
+              `<li><img src="${image.webformatURL}" alt="${image.tags}">
+            <div>
+            <p><span>Likes</span>${image.likes}</p>
+            <p><span>Views</span>${image.views}</p>
+            <p><span>Comments</span>${image.comments}</p>
+            <p><span>Downloads</span>${image.downloads}</p>
+            </div>
+
+            </li>`
           )
           .join('');
 

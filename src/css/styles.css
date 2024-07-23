@@ -21,3 +21,56 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 24px auto;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.gallery li img {
+  width: 360px;
+  height: 200px;
+  transition: transform 250ms ease;
+  margin-bottom: 5px;
+}
+
+.gallery li img:hover {
+  transform: scale(1.02);
+}
+
+.gallery li {
+  border: 1px solid #808080;
+  overflow: hidden;
+}
+
+.gallery li div {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+}
+
+.gallery li div p {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.gallery span {
+  color: #2e2f42;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px; /* 133.333% */
+  letter-spacing: 0.48px;
+}
