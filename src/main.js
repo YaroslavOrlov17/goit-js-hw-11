@@ -35,9 +35,11 @@ function handleSubmit(event) {
         const murkup = images.hits
           .map(
             image =>
-              `<li><img src="${image.hits.webformatURL}" alt="${image.hits.tags}"></li>`
+              `<li><img src="${image.webformatURL}" alt="${image.tags}"></li>`
           )
           .join('');
+
+        console.log(murkup);
 
         galleryList.insertAdjacentHTML('beforeend', murkup);
       }
