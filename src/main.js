@@ -3,6 +3,11 @@ import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+// Описаний у документації
+import iziToast from 'izitoast';
+// Додатковий імпорт стилів
+import 'izitoast/dist/css/iziToast.min.css';
+
 const form = document.querySelector('.form');
 const input = document.querySelector('.input');
 const galleryList = document.querySelector('.gallery');
@@ -33,9 +38,13 @@ function handleSubmit(event) {
     .then(response => response.json())
     .then(images => {
       if (images.hits.length === 0) {
-        console.log(
-          'Sorry, there are no images matching your search query. Please try again!'
-        );
+        iziToast.error({
+          position: 'topRight',
+          messageColor: 'white',
+          backgroundColor: 'red',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+        });
       } else {
         galleryList.innerHTML = '';
 
@@ -64,6 +73,7 @@ function handleSubmit(event) {
           captionDelay: 250,
         });
         gallerySL.on('show.simplelightbox', function () {});
+        refresh();
       }
     })
     .catch(error => console.log(error));
