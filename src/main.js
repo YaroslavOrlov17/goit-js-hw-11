@@ -1,5 +1,6 @@
 const form = document.querySelector('.form');
 const input = document.querySelector('.input');
+const galleryList = document.querySelector('.gallery');
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -10,7 +11,7 @@ function handleSubmit(event) {
     console.log('Заполните форму!');
   }
 
-  // Запрос на сервер -----------------------
+  // Параметры поиска -----------------------
 
   const searchParams = new URLSearchParams({
     key: '16437496-6d56e114a2cb1088922bcb1d6',
@@ -20,10 +21,30 @@ function handleSubmit(event) {
     safesearch: true,
   });
 
+  // -------Запрос на сервер ------------
+
   fetch(`https://pixabay.com/api/?${searchParams}`)
     .then(response => response.json())
-    .then(images => console.log(images))
+    .then(images => {
+      if (images.hits.length === 0) {
+        console.log(
+          'Sorry, there are no images matching your search query. Please try again!'
+        );
+      } else {
+        console.log(images.hits);
+        const murkup = images.hits
+          .map(
+            image =>
+              `<li><img src="${image.hits.webformatURL}" alt="${image.hits.tags}"></li>`
+          )
+          .join('');
+
+        galleryList.insertAdjacentHTML('beforeend', murkup);
+      }
+    })
     .catch(error => console.log(error));
+
+  // -------Запрос на сервер ------------
 
   form.reset();
 }
