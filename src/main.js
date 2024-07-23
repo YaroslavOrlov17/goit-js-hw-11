@@ -11,14 +11,17 @@ import 'izitoast/dist/css/iziToast.min.css';
 const form = document.querySelector('.form');
 const input = document.querySelector('.input');
 const galleryList = document.querySelector('.gallery');
+const loader = document.querySelector(".loader")
 
 function handleSubmit(event) {
   event.preventDefault();
+  galleryList.innerHTML = '';
+  loader.classList.remove("visually-hidden")
   const inputValue = input.value.trim();
   if (inputValue !== '') {
-    console.log(inputValue); //временный вывод значения в консоль
   } else {
-    console.log('Заполните форму!');
+    loader.classList.add("visually-hidden")
+    return
   }
 
   // Параметры поиска -----------------------
@@ -38,6 +41,7 @@ function handleSubmit(event) {
     .then(response => response.json())
     .then(images => {
       if (images.hits.length === 0) {
+        loader.classList.add("visually-hidden")
         iziToast.error({
           position: 'topRight',
           messageColor: 'white',
@@ -46,8 +50,6 @@ function handleSubmit(event) {
             'Sorry, there are no images matching your search query. Please try again!',
         });
       } else {
-        galleryList.innerHTML = '';
-
         // -------Создание разметки ------------
         const murkup = images.hits
           .map(
@@ -66,14 +68,17 @@ function handleSubmit(event) {
           .join('');
 
         // ------- Рендер разметки на странице ------------
+        loader.classList.add("visually-hidden")
+
         galleryList.insertAdjacentHTML('beforeend', murkup);
 
         let gallerySL = new SimpleLightbox('.gallery a', {
           captionsData: 'alt',
           captionDelay: 250,
         });
-        gallerySL.on('show.simplelightbox', function () {});
-        refresh();
+        gallerySL.refresh();
+        gallerySL.on('show.simplelightbox', function () { });
+
       }
     })
     .catch(error => console.log(error));
