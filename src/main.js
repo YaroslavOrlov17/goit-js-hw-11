@@ -24,6 +24,7 @@ function handleSubmit(event) {
       loader.classList.add('visually-hidden');
       if (images.hits.length === 0) {
         iziToast.error({
+          maxWidth: '370px',
           position: 'topRight',
           messageColor: 'white',
           backgroundColor: 'red',
